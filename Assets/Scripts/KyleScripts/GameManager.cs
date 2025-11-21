@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     private GameStateManager GameStateManager;
     private UIManager UIManager;
+    private AudioManager AudioManager;
     private void Awake()
     {
         #region Singleton
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
         #region References
         GameStateManager = GetComponentInChildren<GameStateManager>();
         UIManager = GetComponentInChildren<UIManager>();
+        AudioManager = GetComponentInChildren<AudioManager>();
         #endregion
     }
 }
