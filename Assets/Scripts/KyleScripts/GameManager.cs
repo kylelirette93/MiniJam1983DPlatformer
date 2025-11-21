@@ -3,6 +3,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    private GameStateManager gameStateManager;
     private void Awake()
     {
         #region Singleton
@@ -15,6 +16,10 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        #endregion
+
+        #region References
+        gameStateManager = GetComponentInChildren<GameStateManager>();
         #endregion
     }
 }
