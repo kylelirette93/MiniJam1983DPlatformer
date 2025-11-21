@@ -3,9 +3,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    private GameStateManager GameStateManager;
-    private UIManager UIManager;
-    private AudioManager AudioManager;
+    private GameStateManager gameStateManager;
+    private UIManager uiManager;
+    private AudioManager audioManager;
+
+    public GameStateManager GameStateManager => gameStateManager;
+    public UIManager UIManager => uiManager;
+    public AudioManager AudioManager => audioManager;
     private void Awake()
     {
         #region Singleton
@@ -21,9 +25,9 @@ public class GameManager : MonoBehaviour
         #endregion
 
         #region References
-        GameStateManager = GetComponentInChildren<GameStateManager>();
-        UIManager = GetComponentInChildren<UIManager>();
-        AudioManager = GetComponentInChildren<AudioManager>();
+        gameStateManager = GetComponentInChildren<GameStateManager>();
+        uiManager = GetComponentInChildren<UIManager>();
+        audioManager = GetComponentInChildren<AudioManager>();
         #endregion
     }
 }

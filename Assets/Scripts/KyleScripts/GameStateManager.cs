@@ -5,6 +5,8 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private GameState previousState;
     [SerializeField] private GameState currentState;
 
+    UIManager UIManager => GameManager.Instance.UIManager;
+
     public void SwitchToState(GameState newState)
     {
         previousState = currentState;
@@ -16,19 +18,19 @@ public class GameStateManager : MonoBehaviour
         switch (currentState)
         {
             case GameState.MainMenu:
-                // Handle main menu logic.
+                UIManager.ShowMainMenuUI();
                 break;
             case GameState.Gameplay:
-                // Handle gameplay logic.
+                UIManager.ShowGameplayUI();
                 break;
             case GameState.Credits:
-                // Handle credits logic.
+                UIManager.ShowCreditsUI();
                 break;
             case GameState.GameOver:
-                // Handle game over logic.
+                UIManager.ShowGameOverUI();
                 break;
             case GameState.Paused:
-                // Handle pause logic.
+                UIManager.ShowPauseMenuUI();
                 break;
         }
     }

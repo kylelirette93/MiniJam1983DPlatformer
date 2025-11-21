@@ -22,7 +22,7 @@ public class LevelManager : MonoBehaviour
         Transform centerLane = GameObject.Find("CenterLane").transform;
         Transform rightLane = GameObject.Find("RightLane").transform;
 
-        PlayerController.SetLanes(leftLane, centerLane, rightLane);
+        playerController.SetLanes(leftLane, centerLane, rightLane);
 
         GameObject spawnPoint = GameObject.Find("SpawnPoint");
         if (playerObj != null && spawnPoint != null)
