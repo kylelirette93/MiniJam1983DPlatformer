@@ -6,10 +6,12 @@ public class GameManager : MonoBehaviour
     private GameStateManager gameStateManager;
     private UIManager uiManager;
     private AudioManager audioManager;
+    private LevelManager levelManager;
 
     public GameStateManager GameStateManager => gameStateManager;
     public UIManager UIManager => uiManager;
     public AudioManager AudioManager => audioManager;
+    public LevelManager LevelManager => levelManager;
     private void Awake()
     {
         #region Singleton
@@ -28,6 +30,7 @@ public class GameManager : MonoBehaviour
         gameStateManager = GetComponentInChildren<GameStateManager>();
         uiManager = GetComponentInChildren<UIManager>();
         audioManager = GetComponentInChildren<AudioManager>();
+        levelManager = GetComponentInChildren<LevelManager>();
         #endregion
     }
 }

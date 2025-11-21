@@ -6,6 +6,7 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private GameState currentState;
 
     UIManager UIManager => GameManager.Instance.UIManager;
+    LevelManager LevelManager => GameManager.Instance.LevelManager;
 
     public void SwitchToState(GameState newState)
     {
@@ -33,6 +34,12 @@ public class GameStateManager : MonoBehaviour
                 UIManager.ShowPauseMenuUI();
                 break;
         }
+    }
+
+    public void PlayGame()
+    {
+        LevelManager.LoadScene(1); // Assuming scene index 1 is the gameplay scene.
+        SwitchToState(GameState.Gameplay);
     }
 }
 

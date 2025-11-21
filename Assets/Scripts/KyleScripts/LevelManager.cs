@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    public Transform player;
     public void LoadScene(int sceneIndex)
     {
         // Load scene by index and subscribe to sceneLoaded event.
@@ -18,9 +17,9 @@ public class LevelManager : MonoBehaviour
         GameObject playerObj = GameObject.Find("Player");
         PlayerController playerController = playerObj.GetComponent<PlayerController>();
 
-        Transform leftLane = GameObject.Find("LeftLane").transform;
-        Transform centerLane = GameObject.Find("CenterLane").transform;
-        Transform rightLane = GameObject.Find("RightLane").transform;
+        Transform leftLane = GameObject.Find("TrackLane1").transform;
+        Transform centerLane = GameObject.Find("TrackLane2").transform;
+        Transform rightLane = GameObject.Find("TrackLane3").transform;
 
         playerController.SetLanes(leftLane, centerLane, rightLane);
 
