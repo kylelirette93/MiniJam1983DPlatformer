@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Game State Manager to handle switching between different game states.
@@ -52,6 +53,20 @@ public class GameStateManager : MonoBehaviour
     {
         LevelManager.LoadScene(1); // Assuming scene index 1 is the gameplay scene.
         SwitchToState(GameState.Gameplay);
+    }
+
+    public void LoadNextLevel()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        if (currentSceneIndex + 1 < SceneManager.sceneCountInBuildSettings)
+        {
+            LevelManager.LoadScene(currentSceneIndex + 1);
+        }
+        else
+        {
+            // Go back to first level if no more levels.
+            LevelManager.LoadScene(1);
+        }
     }
 }
 

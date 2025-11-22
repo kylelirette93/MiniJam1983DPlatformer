@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour
     private bool isJumping = false; // Is the player jumping?
     private float jumpTimer = 0f; // Timer to track jump duration.
 
+    // Reference to game state manager.
+    GameStateManager gameStateManager => GameManager.Instance.GameStateManager;
+
     /// <summary>
     /// Set the lanes based on provided spline track.
     /// </summary>
@@ -160,10 +163,19 @@ public class PlayerController : MonoBehaviour
         // Track progress along the spline and clamp between 0 and 1.
         splineProgress += (currentSpeed / splineLength) * Time.deltaTime;
         splineProgress = Mathf.Clamp01(splineProgress);
+        #endregion
+
+        #region Handle Spline Looping.
+        if (splineProgress == 1)
+        {
+            // Reached end of spline.
+            gameStateManager.LoadNextLevel();
+            splineProgress = 0f;
+        }
+        #endregion
 
         // Update track position based on new progress and lane.
         UpdateTrackPosition();
-        #endregion
     }
 
     /// <summary>

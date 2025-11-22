@@ -135,6 +135,14 @@ PrefabInstance:
       propertyPath: offset.z
       value: -4
       objectReference: {fileID: 0}
+    - target: {fileID: 1434680213081450089, guid: 6f4bf87ac10ab9c48a87f111bf7afb81, type: 3}
+      propertyPath: cameraOffset.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434680213081450089, guid: 6f4bf87ac10ab9c48a87f111bf7afb81, type: 3}
+      propertyPath: cameraOffset.z
+      value: -5
+      objectReference: {fileID: 0}
     - target: {fileID: 2904321545214235178, guid: 6f4bf87ac10ab9c48a87f111bf7afb81, type: 3}
       propertyPath: player
       value: 
