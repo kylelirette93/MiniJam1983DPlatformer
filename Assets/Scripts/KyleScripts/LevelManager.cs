@@ -31,21 +31,17 @@ public class LevelManager : MonoBehaviour
         if (trackParent != null)
         {
             SplineContainer splineContainer = trackParent.GetComponent<SplineContainer>();
-            Transform leftLaneObj = trackParent.transform.Find("TrackLane1");
-            Transform centerLaneObj = trackParent.transform.Find("TrackLane2");
-            Transform rightLaneObj = trackParent.transform.Find("TrackLane3");
+            Transform centerLaneObj = trackParent.transform.Find("CenterLane");
 
-            if (leftLaneObj != null && centerLaneObj != null && rightLaneObj != null)
+            if (centerLaneObj != null)
             {
-                SplineContainer leftLane = leftLaneObj.GetComponent<SplineContainer>();
                 SplineContainer centerLane = centerLaneObj.GetComponent<SplineContainer>();
-                SplineContainer rightLane = rightLaneObj.GetComponent<SplineContainer>();
-                playerController.SetLanes(leftLane, centerLane, rightLane);
+                playerController.SetLanes(centerLane);
                 Debug.Log("Lanes set successfully!");
             }
             else
             {
-                Debug.LogError("One or more lanes not found as children!");
+                Debug.LogError("Center lane not found");
             }
         }
         else

@@ -6,75 +6,54 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] float movementSpeed = 10f;
 
-    [Header("Spline settings")]
-    SplineContainer[] lanes;
-    private float splineProgress = 0f;
-    private int currentLane = 1;
+    SplineContainer _trackSpline; // Center spline for track.
+    [SerializeField] float laneWidth = 0.35f;
     [SerializeField] float yOffset = 1f;
+    float laneSwitchSpeed = 10f;
 
-    public void SetLanes(SplineContainer left, SplineContainer center, SplineContainer right)
+    float splineProgress = 0f;
+    private int currentLane = 1;
+    private float currentLaneOffset = 0f;
+
+    public void SetLanes(SplineContainer trackSpline)
     {
-        lanes = new SplineContainer[3];
-        lanes[0] = left;
-        lanes[1] = center;
-        lanes[2] = right;
+        _trackSpline = trackSpline;
 
-        splineProgress = 0f;
-        //Debug.Log($"Lanes set. Left null? {left == null}, Center null? {center == null}, Right null? {right == null}");
         UpdateTrackPosition();
     }
 
     private void UpdateTrackPosition()
     {
-        if (lanes == null || lanes[currentLane] == null)
-        {
-            Debug.LogError("Cannot update position - lanes not set!");
-            return;
-        }
+        _trackSpline.Evaluate(splineProgress, out float3 position, out float3 tangent, out float3 upVector);
 
-        SplineContainer currentSpline = lanes[currentLane];
+        float targetOffset = (currentLane - 1) * laneWidth;
+        currentLaneOffset = Mathf.Lerp(currentLaneOffset, targetOffset, Time.deltaTime * laneSwitchSpeed);
 
-        currentSpline.Evaluate(splineProgress, out float3 position, out float3 tangent, out float3 up);
+        Vector3 right = Vector3.Cross(tangent, upVector).normalized;
 
-        transform.position = new Vector3(position.x, position.y + yOffset, position.z);
+        Vector3 finalPosition = new Vector3(position.x, position.y + yOffset, position.z) + right * currentLaneOffset;
 
+        transform.position = finalPosition;
         transform.forward = tangent;
     }
 
     private void Update()
     {
-        if (lanes == null || lanes[currentLane] == null) return;
+        if (_trackSpline == null) return;
 
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            MoveLane(-1);
+            currentLane = Mathf.Min(2, currentLane + 1);
         }
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
-            MoveLane(1);
+            currentLane = Mathf.Max(0, currentLane - 1);
         }
 
-        SplineContainer currentSpline = lanes[currentLane];
-        float splineLength = currentSpline.Spline.GetLength();
+        float splineLength = _trackSpline.Spline.GetLength();
         splineProgress += (movementSpeed / splineLength) * Time.deltaTime;
-
-        if (splineProgress >= 1f)
-        {
-            // Stops at end of spline, ideally trigger level end here.
-            splineProgress = 1f;
-        }
+        splineProgress = Mathf.Clamp01(splineProgress);
 
         UpdateTrackPosition();
-    }
-
-    void MoveLane(int direction)
-    {
-        int newLane = currentLane + direction;
-        newLane = Mathf.Clamp(newLane, 0, lanes.Length - 1);
-
-        if (newLane != currentLane && lanes[newLane] != null)
-        {
-            currentLane = newLane;
-        }
     }
 }

@@ -127,10 +127,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1434680213081450089, guid: 6f4bf87ac10ab9c48a87f111bf7afb81, type: 3}
+      propertyPath: offset.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434680213081450089, guid: 6f4bf87ac10ab9c48a87f111bf7afb81, type: 3}
+      propertyPath: offset.z
+      value: -4
+      objectReference: {fileID: 0}
     - target: {fileID: 2904321545214235178, guid: 6f4bf87ac10ab9c48a87f111bf7afb81, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1631172995}
+    - target: {fileID: 3312128483821050091, guid: 6f4bf87ac10ab9c48a87f111bf7afb81, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3312128483821050091, guid: 6f4bf87ac10ab9c48a87f111bf7afb81, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3312128483821050091, guid: 6f4bf87ac10ab9c48a87f111bf7afb81, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 6441615916613986473, guid: 6f4bf87ac10ab9c48a87f111bf7afb81, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -174,6 +194,14 @@ PrefabInstance:
     - target: {fileID: 7428457713795171133, guid: 6f4bf87ac10ab9c48a87f111bf7afb81, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7652827196932689403, guid: 6f4bf87ac10ab9c48a87f111bf7afb81, type: 3}
+      propertyPath: yOffset
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7652827196932689403, guid: 6f4bf87ac10ab9c48a87f111bf7afb81, type: 3}
+      propertyPath: movementSpeed
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
