@@ -1,13 +1,19 @@
 using UnityEngine;
 
+/// <summary>
+/// Game Manager that holds reference to all other managers. For ease of access.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    // Private ref to each manager.
     private GameStateManager gameStateManager;
     private UIManager uiManager;
     private AudioManager audioManager;
     private LevelManager levelManager;
 
+    // Public getters for each manager.
     public GameStateManager GameStateManager => gameStateManager;
     public UIManager UIManager => uiManager;
     public AudioManager AudioManager => audioManager;
@@ -27,6 +33,7 @@ public class GameManager : MonoBehaviour
         #endregion
 
         #region References
+        // Each manager is a child of Game Manager. Here I'm grabbing ref to each.
         gameStateManager = GetComponentInChildren<GameStateManager>();
         uiManager = GetComponentInChildren<UIManager>();
         audioManager = GetComponentInChildren<AudioManager>();

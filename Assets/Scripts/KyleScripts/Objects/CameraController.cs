@@ -1,10 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Camera controller to smoothly follow player.
+/// </summary>
 public class CameraController : MonoBehaviour
 {
     Transform player;
-    [SerializeField] Vector3 offset = new Vector3(0f, 5f, -10f);
+
+    [Header("Camera Settings")]
+    [SerializeField] Vector3 cameraOffset = new Vector3(0f, 5f, -10f);
 
     private void Awake()
     {
@@ -26,10 +31,13 @@ public class CameraController : MonoBehaviour
     {
         if (player != null)
         {
-            Vector3 desiredPosition = player.position + player.rotation * offset;
+            // Determine desired position based on player position and camera offset.
+            Vector3 desiredPosition = player.position + player.rotation * cameraOffset;
 
+            // Smoothly interpolate to desired position.
             transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * 5f);
 
+            // Look at the player with a slight upward offset.
             transform.LookAt(player.position + Vector3.up * 2f);
         }
     }
