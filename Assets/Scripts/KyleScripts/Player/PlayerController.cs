@@ -33,8 +33,17 @@ public class PlayerController : MonoBehaviour
     private bool isJumping = false; // Is the player jumping?
     private float jumpTimer = 0f; // Timer to track jump duration.
 
+    bool isMoving = false;
+
+    Animator animator;
+
     // Reference to game state manager.
     GameStateManager gameStateManager => GameManager.Instance.GameStateManager;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     /// <summary>
     /// Set the lanes based on provided spline track.
@@ -130,11 +139,14 @@ public class PlayerController : MonoBehaviour
         float currentSpeed = movementSpeed;
         if (isDashing)
         {
+            animator.SetBool("IsMoving", false);
+            animator.SetBool("IsDashing", true);
             dashTimer += Time.deltaTime;
             if (dashTimer >= dashDuration)
             {
                 isDashing = false;
                 dashTimer = 0f;
+                animator.SetBool("IsDashing", false);
             }
             else
             {
@@ -163,6 +175,10 @@ public class PlayerController : MonoBehaviour
         // Track progress along the spline and clamp between 0 and 1.
         splineProgress += (currentSpeed / splineLength) * Time.deltaTime;
         splineProgress = Mathf.Clamp01(splineProgress);
+        if (!isDashing)
+        {
+            animator.SetBool("IsMoving", true);
+        }
         #endregion
 
         #region Handle Spline Looping.
@@ -183,6 +199,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void HandleDash()
     {
+        isMoving = false;
         isDashing = true;
         dashTimer = 0f;
         Stamina.Decrease(20f);
