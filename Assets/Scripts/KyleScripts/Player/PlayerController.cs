@@ -82,7 +82,15 @@ public class PlayerController : MonoBehaviour
         // Handle dash input.
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
         {
-            HandleDash();
+            float stamina = Stamina.GetCurrentStamina();
+            if (stamina > 0)
+            {
+                HandleDash();
+            }
+            else
+            {
+                Debug.Log("Shouldn't be able to dash.");
+            }
         }
 
         // Handle jump input.
@@ -131,6 +139,7 @@ public class PlayerController : MonoBehaviour
     {
         isDashing = true;
         dashTimer = 0f;
+        Stamina.Decrease(20f);
     }
 
     private void HandleJump()
