@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +15,7 @@ public class GameStateManager : MonoBehaviour
     UIManager UIManager => GameManager.Instance.UIManager;
     LevelManager LevelManager => GameManager.Instance.LevelManager;
     PlayerController PlayerController => GameManager.Instance.PlayerController;
+    AudioManager AudioManager => GameManager.Instance.AudioManager;
 
     /// <summary>
     /// Handle switching between game states, storing previous state.
@@ -32,12 +34,18 @@ public class GameStateManager : MonoBehaviour
         OnEnterState(newState);
     }
 
+    public void Start()
+    {
+        SwitchToState(GameState.MainMenu);
+    }
+
     private void OnEnterState(GameState state)
     {
         Debug.Log($"ENTERING STATE: {state}");
         switch (state)
         {
             case GameState.MainMenu:
+                AudioManager.PlayMusic("MainMenu");
                 UIManager.ShowMainMenuUI();
                 break;
             case GameState.Tutorial:
@@ -46,13 +54,12 @@ public class GameStateManager : MonoBehaviour
             case GameState.Gameplay:
                 UIManager.ShowGameplayUI();
                 Time.timeScale = 1f;
-                PlayerController.ResetPlayerStats();
-                PlayerController.StartMoving();
                 break;
             case GameState.GameOver:
                 UIManager.ShowGameOverUI();
                 break;
             case GameState.Paused:
+                //AudioManager.PauseMusic();
                 UIManager.ShowPauseMenuUI();
                 Time.timeScale = 0f;
                 break;
@@ -61,7 +68,20 @@ public class GameStateManager : MonoBehaviour
 
     private void OnExitState(GameState state)
     {
-        // Clean up if needed
+        switch (state)
+        {
+            case GameState.MainMenu:
+                break;
+            case GameState.Tutorial:
+                break;
+            case GameState.Gameplay:
+                break;
+            case GameState.GameOver:
+                break;
+            case GameState.Paused:
+                //AudioManager.ResumeMusic();
+                break;
+        }
     }
 
     public void Update()
@@ -95,7 +115,19 @@ public class GameStateManager : MonoBehaviour
     public void PlayGame()
     {
         Debug.Log("Play game clicked!");
+        AudioManager.PlayMusic("Gameplay");
         SwitchToState(GameState.Gameplay);
+        PlayerController.ResetPlayerStats();
+        PlayerController.StartMoving();
+    }
+
+    public void Replay()
+    {
+        LevelManager.LoadScene(1);
+        AudioManager.PlayMusic("Gameplay");
+        SwitchToState(GameState.Gameplay);
+        PlayerController.ResetPlayerStats();
+        PlayerController.StartMoving();
     }
 
     public void QuitGame()

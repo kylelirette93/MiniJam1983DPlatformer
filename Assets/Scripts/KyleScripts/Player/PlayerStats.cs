@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class PlayerStats : MonoBehaviour
 
     private void Update()
     {
-        distanceTraveled += Time.deltaTime * 5f; 
+        distanceTraveled += Time.deltaTime * 5f;
     }
 }
 
@@ -84,6 +85,42 @@ public static class Distance
     public static float GetDistance()
     {
         return distance;
+    }
+
+    public static void Reset()
+    {
+        distance = 0f;
+        OnChanged?.Invoke(distance);
+    }
+}
+
+public static class Speed
+{
+    // Event for distance changes, passing distance.
+    public static event Action<float> OnChanged;
+    private static float speed;
+    /// <summary>
+    /// Update distance and invoke change event.
+    /// </summary>
+    /// <param name="amount">The amount to increase distance.</param>
+    public static void UpdateSpeed(float amount)
+    {
+        speed += amount;
+        OnChanged?.Invoke(speed);
+    }
+    /// <summary>
+    /// Returns current distance traveled.
+    /// </summary>
+    /// <returns></returns>
+    public static float GetSpeed()
+    {
+        return speed;
+    }
+
+    public static void Reset()
+    {
+        speed = 0f;
+        OnChanged?.Invoke(speed);
     }
 }
 

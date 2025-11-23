@@ -50,7 +50,7 @@ public class LevelManager : MonoBehaviour
             if (centerLaneObj != null)
             {
                 SplineContainer centerLane = centerLaneObj.GetComponent<SplineContainer>();
-                playerController.SetLanes(centerLane);
+                playerController.SetLanes(centerLane, spawnPoint.transform);
                 Debug.Log("Lanes set successfully!");
             }
             else

@@ -1,6 +1,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
+using System;
 
 /// <summary>
 /// Player Controller that handles both input and movement along a spline track.
@@ -43,6 +44,7 @@ public class PlayerController : MonoBehaviour
     bool canMove = false;
 
     float distanceTraveled = 0f;
+    Transform _originalSpawn;
 
     Animator animator;
 
@@ -57,16 +59,22 @@ public class PlayerController : MonoBehaviour
 
     public void ResetPlayerStats()
     {
+        transform.position = _originalSpawn.position;
+        transform.rotation = _originalSpawn.rotation;
+        Distance.Reset();
+        Speed.Reset();
         distanceTraveled = 0f;
         movementSpeed = 3f;
+        splineProgress = 0f;
     }
 
     /// <summary>
     /// Set the lanes based on provided spline track.
     /// </summary>
     /// <param name="trackSpline">Spline track that's grabbed when scene loads.</param>
-    public void SetLanes(SplineContainer trackSpline)
+    public void SetLanes(SplineContainer trackSpline, Transform originalSpawn)
     {
+        _originalSpawn = originalSpawn;
         // Set through on scene loaded, after grabbing center spline from scene.
         _trackSpline = trackSpline;
         // Update initial position.
@@ -79,6 +87,7 @@ public class PlayerController : MonoBehaviour
     public void StartMoving()
     {
         canMove = true;
+        Speed.UpdateSpeed(0);
     }
 
     /// <summary>
@@ -232,6 +241,7 @@ public class PlayerController : MonoBehaviour
         splineProgress = Mathf.Clamp01(splineProgress);
         if (!isDashing)
         {
+            animator.speed = currentSpeed / movementSpeed;
             animator.SetBool("IsMoving", true);
         }
         #endregion
@@ -263,6 +273,7 @@ public class PlayerController : MonoBehaviour
         dashTimer = 0f;
         Stamina.Decrease(20f);
         movementSpeed += 0.2f;
+        Speed.UpdateSpeed(movementSpeed);
     }
     /// <summary>
     /// Handles jump action. Resetting timer and flag.

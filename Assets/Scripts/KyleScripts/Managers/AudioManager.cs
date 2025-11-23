@@ -21,6 +21,8 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         PopulateAudioLibrary();
+        float savedVolume = PlayerPrefs.GetFloat("Volume", 0.5f);
+        UpdateVolume(savedVolume);
     }
 
     private void PopulateAudioLibrary()
@@ -75,6 +77,14 @@ public class AudioManager : MonoBehaviour
         {
             Debug.LogWarning($"Music '{name}' not found!");
         }
+    }
+
+    public void UpdateVolume(float volume)
+    {
+        MusicSource.volume = volume;
+        SFXSource.volume = volume;
+        PlayerPrefs.SetFloat("Volume", volume);
+        PlayerPrefs.Save();
     }
 
     /// <summary>
