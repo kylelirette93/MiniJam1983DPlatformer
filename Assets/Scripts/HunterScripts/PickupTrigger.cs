@@ -8,7 +8,7 @@ public class PickupTrigger : MonoBehaviour
         {
             // This is where we do stuff.
             // Pickup recharges stamina
-            GameManager.Instance.AudioManager.PlaySFX("Pickup");
+            GameManager.Instance.AudioManager.PlaySFX("Pickup", 1);
             Stamina.Increase(15f);
             Destroy(gameObject);
         }

@@ -43,11 +43,16 @@ public class AudioManager : MonoBehaviour
     /// Retrieves a SFX from dictionary and play it, if it exists.
     /// </summary>
     /// <param name="name">String name of SFX in dictionary.</param>
-    public void PlaySFX(string name)
+    public void PlaySFX(string name, float clipSpeed)
     {
         if (SFXDictionary.TryGetValue(name, out AudioClip clip))
         {
-            SFXSource.PlayOneShot(clip);
+            AudioSource tempSource = gameObject.AddComponent<AudioSource>();
+            tempSource.clip = clip;
+            tempSource.volume = SFXSource.volume;
+            tempSource.Play();
+            tempSource.SetScheduledEndTime(AudioSettings.dspTime + (clip.length / clipSpeed));
+            Destroy(tempSource, clip.length / clipSpeed + 0.1f);
         }
         else
         {

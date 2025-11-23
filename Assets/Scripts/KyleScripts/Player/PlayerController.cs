@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         // Move player back a bit when stopping.
-        audioManager.PlaySFX("Death");
+        audioManager.PlaySFX("Death", 1);
         knockbackProgress = Mathf.Max(0, splineProgress - knockbackDistance);
         isKnockedBack = true;
         canMove = false;
@@ -257,7 +257,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void HandleDash()
     {
-        audioManager.PlaySFX("Dash");
+        audioManager.PlaySFX("Dash", 1);
         isMoving = false;
         isDashing = true;
         dashTimer = 0f;
@@ -269,7 +269,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void HandleJump()
     {
-        audioManager.PlaySFX("Jump");
+        audioManager.PlaySFX("Jump", 1.5f);
         isJumping = true;
         jumpTimer = 0f;
     }
