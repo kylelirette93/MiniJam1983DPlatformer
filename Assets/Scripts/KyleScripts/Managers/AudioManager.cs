@@ -7,8 +7,8 @@ using System.Collections.Generic;
 public class AudioManager : MonoBehaviour
 {
     // List to hold actual audio clips for sfx and music.
-    List<AudioClip> SFXClips = new List<AudioClip>();
-    List<AudioClip> MusicClips = new List<AudioClip>();
+    public List<AudioClip> SFXClips = new List<AudioClip>();
+    public List<AudioClip> MusicClips = new List<AudioClip>();
 
     // Dictionarys for quick lookup.
     Dictionary<string, AudioClip> SFXDictionary = new Dictionary<string, AudioClip>();

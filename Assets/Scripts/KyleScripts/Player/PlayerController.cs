@@ -28,10 +28,16 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jump Settings")]
     [SerializeField] float jumpHeight = 3f; // Height of jump.
-    [SerializeField] float jumpDuration = 0.6f; // Duration of jump.
+    [SerializeField] float jumpDuration = 0.8f; // Duration of jump.
     [SerializeField] AnimationCurve jumpCurve = AnimationCurve.EaseInOut(0, 0, 1, 1); // Curve for jump height over time.
     private bool isJumping = false; // Is the player jumping?
     private float jumpTimer = 0f; // Timer to track jump duration.
+
+    [Header("Knockback Settings")]
+    [SerializeField] float knockbackDistance = 0.01f;
+    [SerializeField] float knockbackDuration = 0.2f;
+    bool isKnockedBack = false;
+    float knockbackProgress = 0f;
 
     bool isMoving = false;
     bool canMove = false;
@@ -42,6 +48,7 @@ public class PlayerController : MonoBehaviour
 
     // Reference to game state manager.
     GameStateManager gameStateManager => GameManager.Instance.GameStateManager;
+    AudioManager audioManager => GameManager.Instance.AudioManager;
 
     private void Start()
     {
@@ -66,16 +73,27 @@ public class PlayerController : MonoBehaviour
         UpdateTrackPosition();
     }
 
+    /// <summary>
+    /// Restart player movement, used when starting gameplay.
+    /// </summary>
     public void StartMoving()
     {
         canMove = true;
     }
 
-    public void StopMoving()
+    /// <summary>
+    /// Handles player death, stopping movement and applying knockback.
+    /// </summary>
+    public void Die()
     {
         // Move player back a bit when stopping.
-        splineProgress = Mathf.Max(0, splineProgress - 0.05f);
+        audioManager.PlaySFX("Death");
+        knockbackProgress = Mathf.Max(0, splineProgress - knockbackDistance);
+        isKnockedBack = true;
         canMove = false;
+        isMoving = false;
+        animator.SetBool("IsMoving", false);
+        // Ideally set death animation here.
     }
 
     /// <summary>
@@ -118,8 +136,24 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (_trackSpline == null || !canMove) return;
+        if (_trackSpline == null) return;
 
+        #region Handle Knockback
+        if (isKnockedBack)
+        {
+            splineProgress = Mathf.Lerp(splineProgress, knockbackProgress, Time.deltaTime / knockbackDuration);
+            if (Mathf.Abs(splineProgress - knockbackProgress) < 0.001f)
+            {
+                splineProgress = knockbackProgress;
+                isKnockedBack = false;
+            }
+            UpdateTrackPosition();
+            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+            return;
+        }
+        #endregion
+
+        if (!canMove) return;
         #region Handle Lane Switching Input
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -223,6 +257,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void HandleDash()
     {
+        audioManager.PlaySFX("Dash");
         isMoving = false;
         isDashing = true;
         dashTimer = 0f;
@@ -234,6 +269,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void HandleJump()
     {
+        audioManager.PlaySFX("Jump");
         isJumping = true;
         jumpTimer = 0f;
     }

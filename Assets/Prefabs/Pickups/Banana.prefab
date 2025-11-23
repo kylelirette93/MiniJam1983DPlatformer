@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 9157918552399949331}
   - component: {fileID: 6409608733538835161}
   - component: {fileID: 1928708186775568660}
-  - component: {fileID: 3667537757510609271}
+  - component: {fileID: 6031735598154765332}
+  - component: {fileID: 2801508667197139985}
   m_Layer: 0
   m_Name: Banana
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: -0.3144778, z: -0.18230596}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.18, y: 0.18, z: 0.18}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -107,9 +108,9 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.3
+  m_Radius: 2
   m_Center: {x: 0.007118553, y: 0.49718732, z: -0.052506387}
---- !u!114 &3667537757510609271
+--- !u!114 &6031735598154765332
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,6 +119,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 4896395065942702860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85b629fa7b082aa4bbb0dd7e3b206c0d, type: 3}
+  m_Script: {fileID: 11500000, guid: e75584dd4174c0943b8f9115573e2c52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2801508667197139985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4896395065942702860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7187f03bc2fb29044a52372926c768a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

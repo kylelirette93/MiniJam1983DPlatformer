@@ -2,14 +2,14 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class hazardtrigger : MonoBehaviour
+public class HazardTrigger : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collisioninfo)
     {
         if (collisioninfo.gameObject.CompareTag("Player"))
         {
             // stop movement if colliding with another player.
-            collisioninfo.gameObject.GetComponent<PlayerController>().StopMoving();
+            collisioninfo.gameObject.GetComponent<PlayerController>().Die();
 
             Invoke("ChangeToGameOver", 2f);
         }
