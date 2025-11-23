@@ -11,7 +11,15 @@ PrefabInstance:
     - target: {fileID: 2722675179242887360, guid: 0d4f9d97eca2e3d4bbe3374b255a7337, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 20db7c45f1b9e5b49af173a05655fb60, type: 2}
+      objectReference: {fileID: 2100000, guid: 97b61dedb162ad847bd405758fa14de8, type: 2}
+    - target: {fileID: 3279499886330121230, guid: 0d4f9d97eca2e3d4bbe3374b255a7337, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 97b61dedb162ad847bd405758fa14de8, type: 2}
+    - target: {fileID: 4099875598682774812, guid: 0d4f9d97eca2e3d4bbe3374b255a7337, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 97b61dedb162ad847bd405758fa14de8, type: 2}
     - target: {fileID: 4805883609288836992, guid: 0d4f9d97eca2e3d4bbe3374b255a7337, type: 3}
       propertyPath: m_Name
       value: Trash_Green_Graffiti Variant
