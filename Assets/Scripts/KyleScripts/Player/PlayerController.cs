@@ -71,6 +71,13 @@ public class PlayerController : MonoBehaviour
         canMove = true;
     }
 
+    public void StopMoving()
+    {
+        // Move player back a bit when stopping.
+        splineProgress = Mathf.Max(0, splineProgress - 0.05f);
+        canMove = false;
+    }
+
     /// <summary>
     /// Updates players position along spline track, accounting for lane switching and jumping.
     /// </summary>
