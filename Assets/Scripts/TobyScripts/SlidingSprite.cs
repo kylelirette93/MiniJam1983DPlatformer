@@ -27,14 +27,15 @@ public class SlidingSprite : MonoBehaviour
 
     private IEnumerator SlideSprite(Vector2 targetPosition)
     {
-        Debug.Log("SlideSprite started");
+        //Debug.Log("SlideSprite started");
         while (Vector2.Distance(spriteRectTransform.anchoredPosition, targetPosition) > 0.1f)
         {
-            Debug.Log("Sliding...");
+            if (!gameObject.activeInHierarchy) yield break;
+            //Debug.Log("Sliding...");
             spriteRectTransform.anchoredPosition = Vector2.Lerp(spriteRectTransform.anchoredPosition, targetPosition, slideSpeed * Time.deltaTime);
             yield return null;
         }
         spriteRectTransform.anchoredPosition = targetPosition;
-        Debug.Log("SlideSprite finished");
+        //Debug.Log("SlideSprite finished");
     }
 }

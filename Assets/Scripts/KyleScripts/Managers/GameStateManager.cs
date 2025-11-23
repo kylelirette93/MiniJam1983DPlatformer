@@ -33,15 +33,22 @@ public class GameStateManager : MonoBehaviour
                 break;
             case GameState.Gameplay:
                 UIManager.ShowGameplayUI();
-                break;
-            case GameState.Credits:
-                UIManager.ShowCreditsUI();
+                Time.timeScale = 1f;
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    PauseGame();
+                }
                 break;
             case GameState.GameOver:
                 UIManager.ShowGameOverUI();
                 break;
             case GameState.Paused:
                 UIManager.ShowPauseMenuUI();
+                Time.timeScale = 0f;
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    ResumeGame();
+                }
                 break;
         }
     }
@@ -53,6 +60,27 @@ public class GameStateManager : MonoBehaviour
     {
         LevelManager.LoadScene(1); // Assuming scene index 1 is the gameplay scene.
         SwitchToState(GameState.Gameplay);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void PauseGame()
+    {
+        if (currentState == GameState.Gameplay)
+        {
+            SwitchToState(GameState.Paused);
+        }
+    }
+
+    public void ResumeGame()
+    {
+        if (currentState == GameState.Paused) 
+        {
+            SwitchToState(GameState.Gameplay);
+        }
     }
 
     public void LoadNextLevel()
@@ -77,7 +105,6 @@ public enum GameState
 {
     MainMenu,
     Gameplay,
-    Credits,
     GameOver,
     Paused
 }

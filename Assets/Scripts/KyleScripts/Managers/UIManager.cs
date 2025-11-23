@@ -9,8 +9,8 @@ public class UIManager : MonoBehaviour
     public GameObject MainMenuPanel;
     public GameObject GameplayPanel;
     public GameObject PauseMenuPanel;
-    public GameObject CreditsPanel;
     public GameObject GameOverPanel;
+    public SlidingSprite slidingSprite;
     #endregion
 
     /// <summary>
@@ -23,7 +23,6 @@ public class UIManager : MonoBehaviour
         MainMenuPanel.SetActive(false);
         GameplayPanel.SetActive(false);
         PauseMenuPanel.SetActive(false);
-        CreditsPanel.SetActive(false);
         GameOverPanel.SetActive(false);
         #endregion
     }
@@ -33,26 +32,25 @@ public class UIManager : MonoBehaviour
     {
         DisableAllMenuUI();
         MainMenuPanel.SetActive(true);
+        slidingSprite.gameObject.SetActive(true);
     }
     public void ShowGameplayUI()
     {
         DisableAllMenuUI();
         GameplayPanel.SetActive(true);
+        slidingSprite.gameObject.SetActive(false);
     }
     public void ShowPauseMenuUI()
     {
         DisableAllMenuUI();
         PauseMenuPanel.SetActive(true);
-    }
-    public void ShowCreditsUI()
-    {
-        DisableAllMenuUI();
-        CreditsPanel.SetActive(true);
+        slidingSprite.gameObject.SetActive(false);
     }
     public void ShowGameOverUI()
     {
         DisableAllMenuUI();
         GameOverPanel.SetActive(true);
+        slidingSprite.gameObject.SetActive(true);
     }
     #endregion
 }

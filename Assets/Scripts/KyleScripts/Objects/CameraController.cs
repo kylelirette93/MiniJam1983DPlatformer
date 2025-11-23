@@ -38,7 +38,7 @@ public class CameraController : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * 5f);
 
             // Look at the player with a slight upward offset.
-            transform.LookAt(player.position + Vector3.up * 2f);
+            transform.LookAt(player.position + Vector3.up * 1.2f);
         }
     }
 }

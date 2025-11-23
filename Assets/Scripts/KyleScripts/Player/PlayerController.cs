@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
 
     bool isMoving = false;
 
+    float distanceTraveled = 0f;
+
     Animator animator;
 
     // Reference to game state manager.
@@ -43,6 +45,12 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
+    }
+
+    public void ResetPlayerStats()
+    {
+        distanceTraveled = 0f;
+        movementSpeed = 3f;
     }
 
     /// <summary>
@@ -190,6 +198,9 @@ public class PlayerController : MonoBehaviour
         }
         #endregion
 
+        distanceTraveled += 0.001f * currentSpeed * Time.deltaTime;
+        Distance.UpdateDistance(distanceTraveled);
+
         // Update track position based on new progress and lane.
         UpdateTrackPosition();
     }
@@ -203,6 +214,7 @@ public class PlayerController : MonoBehaviour
         isDashing = true;
         dashTimer = 0f;
         Stamina.Decrease(20f);
+        movementSpeed += 0.2f;
     }
     /// <summary>
     /// Handles jump action. Resetting timer and flag.
@@ -211,5 +223,10 @@ public class PlayerController : MonoBehaviour
     {
         isJumping = true;
         jumpTimer = 0f;
+    }
+
+    public float GetDistanceTraveled()
+    {
+        return distanceTraveled;
     }
 }

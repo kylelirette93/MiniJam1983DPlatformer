@@ -40,44 +40,4 @@ public class StaminaBar : MonoBehaviour
     }
 }
 
-/// <summary>
-/// Stamina Management class with easy access methods.
-/// </summary>
-public static class Stamina
-{
-    // Event for stamina changes, passing percentage.
-    public static event Action<float> OnChanged;
 
-    // Stamina values.
-    private static float current = 100f;
-    private static float max = 100f;
-
-    /// <summary>
-    /// Decrease stamina and invoke change event.
-    /// </summary>
-    /// <param name="amount">The amount to decrease stamina.</param>
-    public static void Decrease(float amount)
-    {
-        current = Mathf.Max(0, current - amount);
-        OnChanged?.Invoke(current / max);
-    }
-
-    /// <summary>
-    /// Increase stamina and invoke change event.
-    /// </summary>
-    /// <param name="amount">The amount to increase stamina</param>
-    public static void Increase(float amount)
-    {
-        current = Mathf.Min(max, current + amount);
-        OnChanged?.Invoke(current / max);
-    }
-
-    /// <summary>
-    /// Returns current stamina, to see if can dash.
-    /// </summary>
-    /// <returns></returns>
-    public static float GetCurrentStamina()
-    {
-        return current;
-    }
-}
