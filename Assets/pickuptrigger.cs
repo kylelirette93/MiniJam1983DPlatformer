@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class hazardtrigger : MonoBehaviour
+public class pickuptrigger : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
