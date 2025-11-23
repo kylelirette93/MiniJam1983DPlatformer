@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
         transform.rotation = _originalSpawn.rotation;
         Distance.Reset();
         Speed.Reset();
+        Stamina.Reset();
         distanceTraveled = 0f;
         movementSpeed = 3f;
         splineProgress = 0f;

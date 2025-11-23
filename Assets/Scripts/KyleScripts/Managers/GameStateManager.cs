@@ -154,15 +154,17 @@ public class GameStateManager : MonoBehaviour
     public void LoadNextLevel()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        if (currentSceneIndex + 1 < SceneManager.sceneCountInBuildSettings)
+        int totalScenes = SceneManager.sceneCountInBuildSettings;
+
+        int minScene = 1;
+        int randomIndex;
+        do
         {
-            LevelManager.LoadScene(currentSceneIndex + 1);
+            randomIndex = Random.Range(minScene, totalScenes);
         }
-        else
-        {
-            // Go back to first level if no more levels.
-            LevelManager.LoadScene(1);
-        }
+        while (randomIndex == currentSceneIndex);
+
+        LevelManager.LoadScene(randomIndex);
     }
 }
 

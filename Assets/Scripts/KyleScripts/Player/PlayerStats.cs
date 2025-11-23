@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
@@ -51,6 +52,12 @@ public static class Stamina
     public static void Increase(float amount)
     {
         current = Mathf.Min(max, current + amount);
+        OnChanged?.Invoke(current / max);
+    }
+
+    public static void Reset()
+    {
+        current = max;
         OnChanged?.Invoke(current / max);
     }
 
