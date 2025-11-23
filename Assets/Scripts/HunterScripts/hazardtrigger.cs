@@ -11,7 +11,7 @@ public class HazardTrigger : MonoBehaviour
             // stop movement if colliding with another player.
             collisioninfo.gameObject.GetComponent<PlayerController>().Die();
 
-            Invoke("ChangeToGameOver", 2f);
+            Invoke("ChangeToGameOver", 1f);
         }
 
 

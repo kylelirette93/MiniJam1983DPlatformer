@@ -40,6 +40,15 @@ public class PlayerController : MonoBehaviour
     bool isKnockedBack = false;
     float knockbackProgress = 0f;
 
+    [Header("Death Settings")]
+    bool isFallingOff = false;
+    [SerializeField] float fallSpeed = 5f;
+    Vector3 fallDirection;
+    float bounciness = 3f;
+    float gravity = 7f;
+    float upwardVelocity = 0f;
+    
+
     bool isMoving = false;
     bool canMove = false;
 
@@ -59,6 +68,8 @@ public class PlayerController : MonoBehaviour
 
     public void ResetPlayerStats()
     {
+        upwardVelocity = 0f;
+        isFallingOff = false;
         transform.position = _originalSpawn.position;
         transform.rotation = _originalSpawn.rotation;
         Distance.Reset();
@@ -98,10 +109,24 @@ public class PlayerController : MonoBehaviour
     {
         // Move player back a bit when stopping.
         audioManager.PlaySFX("Death", 1);
-        knockbackProgress = Mathf.Max(0, splineProgress - knockbackDistance);
-        isKnockedBack = true;
+        _trackSpline.Evaluate(splineProgress, out float3 position, out float3 tangent, out float3 upVector);
+        Vector3 right = Vector3.Cross(tangent, upVector).normalized;
+
+        if (currentLane == 0)
+        {
+            fallDirection = -right;
+        }
+        else if (currentLane == 1)
+        {
+            fallDirection = right;
+        }
+        else
+        {
+            fallDirection = right;
+        }
+        upwardVelocity = bounciness;
+        isFallingOff = true;
         canMove = false;
-        isMoving = false;
         animator.SetBool("IsMoving", false);
         // Ideally set death animation here.
     }
@@ -148,20 +173,17 @@ public class PlayerController : MonoBehaviour
     {
         if (_trackSpline == null) return;
 
-        #region Handle Knockback
-        if (isKnockedBack)
+        #region Handle Death
+        if (isFallingOff)
         {
-            splineProgress = Mathf.Lerp(splineProgress, knockbackProgress, Time.deltaTime / knockbackDuration);
-            if (Mathf.Abs(splineProgress - knockbackProgress) < 0.001f)
-            {
-                splineProgress = knockbackProgress;
-                isKnockedBack = false;
-            }
-            UpdateTrackPosition();
-            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+            float timeScale = fallSpeed * Time.deltaTime;
+            upwardVelocity -= gravity * Time.deltaTime;
+            transform.position += Vector3.up * upwardVelocity * timeScale;
+            transform.position += fallDirection * (fallSpeed * 0.05f) * timeScale;
             return;
         }
         #endregion
+
 
         if (!canMove) return;
         #region Handle Lane Switching Input
