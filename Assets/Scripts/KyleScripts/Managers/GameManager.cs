@@ -12,12 +12,14 @@ public class GameManager : MonoBehaviour
     private UIManager uiManager;
     private AudioManager audioManager;
     private LevelManager levelManager;
+    private PlayerController playerController;
 
     // Public getters for each manager.
     public GameStateManager GameStateManager => gameStateManager;
     public UIManager UIManager => uiManager;
     public AudioManager AudioManager => audioManager;
     public LevelManager LevelManager => levelManager;
+    public PlayerController PlayerController => playerController;
     private void Awake()
     {
         #region Singleton
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
         uiManager = GetComponentInChildren<UIManager>();
         audioManager = GetComponentInChildren<AudioManager>();
         levelManager = GetComponentInChildren<LevelManager>();
+        playerController = GetComponentInChildren<PlayerController>();
         #endregion
     }
 }

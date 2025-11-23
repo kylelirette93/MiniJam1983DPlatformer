@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 {
     #region UI Panels
     public GameObject MainMenuPanel;
+    public GameObject TutorialPanel;
     public GameObject GameplayPanel;
     public GameObject PauseMenuPanel;
     public GameObject GameOverPanel;
@@ -21,6 +22,7 @@ public class UIManager : MonoBehaviour
         #region Deactivate All Panels
         // Disable all UI panels.
         MainMenuPanel.SetActive(false);
+        TutorialPanel.SetActive(false);
         GameplayPanel.SetActive(false);
         PauseMenuPanel.SetActive(false);
         GameOverPanel.SetActive(false);
@@ -33,6 +35,13 @@ public class UIManager : MonoBehaviour
         DisableAllMenuUI();
         MainMenuPanel.SetActive(true);
         slidingSprite.gameObject.SetActive(true);
+    }
+
+    public void ShowTutorialUI()
+    {
+        DisableAllMenuUI();
+        TutorialPanel.SetActive(true);
+        slidingSprite.gameObject.SetActive(false);
     }
     public void ShowGameplayUI()
     {

@@ -13,6 +13,7 @@ public class GameStateManager : MonoBehaviour
     // References to what we need via service locator pattern.
     UIManager UIManager => GameManager.Instance.UIManager;
     LevelManager LevelManager => GameManager.Instance.LevelManager;
+    PlayerController PlayerController => GameManager.Instance.PlayerController;
 
     /// <summary>
     /// Handle switching between game states, storing previous state.
@@ -20,24 +21,33 @@ public class GameStateManager : MonoBehaviour
     /// <param name="newState">The state to switch to.</param>
     public void SwitchToState(GameState newState)
     {
+
+        // Exit previous state
+        OnExitState(previousState);
+
         previousState = currentState;
         currentState = newState;
+
+        // Enter new state
+        OnEnterState(newState);
     }
 
-    public void Update()
+    private void OnEnterState(GameState state)
     {
-        switch (currentState)
+        Debug.Log($"ENTERING STATE: {state}");
+        switch (state)
         {
             case GameState.MainMenu:
                 UIManager.ShowMainMenuUI();
                 break;
+            case GameState.Tutorial:
+                UIManager.ShowTutorialUI();
+                break;
             case GameState.Gameplay:
                 UIManager.ShowGameplayUI();
                 Time.timeScale = 1f;
-                if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    PauseGame();
-                }
+                PlayerController.ResetPlayerStats();
+                PlayerController.StartMoving();
                 break;
             case GameState.GameOver:
                 UIManager.ShowGameOverUI();
@@ -45,6 +55,26 @@ public class GameStateManager : MonoBehaviour
             case GameState.Paused:
                 UIManager.ShowPauseMenuUI();
                 Time.timeScale = 0f;
+                break;
+        }
+    }
+
+    private void OnExitState(GameState state)
+    {
+        // Clean up if needed
+    }
+
+    public void Update()
+    {
+        switch (currentState)
+        {
+            case GameState.Gameplay:
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    PauseGame();
+                }
+                break;
+            case GameState.Paused:
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     ResumeGame();
@@ -53,12 +83,18 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
+    public void StartTutorial()
+    {
+        LevelManager.LoadScene(1); // Assuming scene index 1 is the gameplay scene.
+        SwitchToState(GameState.Tutorial);
+    }
+
     /// <summary>
     /// Play game button, loads first level and switches state.
     /// </summary>
     public void PlayGame()
     {
-        LevelManager.LoadScene(1); // Assuming scene index 1 is the gameplay scene.
+        Debug.Log("Play game clicked!");
         SwitchToState(GameState.Gameplay);
     }
 
@@ -104,6 +140,7 @@ public class GameStateManager : MonoBehaviour
 public enum GameState
 {
     MainMenu,
+    Tutorial,
     Gameplay,
     GameOver,
     Paused

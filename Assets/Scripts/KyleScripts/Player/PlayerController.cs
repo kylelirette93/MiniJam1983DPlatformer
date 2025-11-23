@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private float jumpTimer = 0f; // Timer to track jump duration.
 
     bool isMoving = false;
+    bool canMove = false;
 
     float distanceTraveled = 0f;
 
@@ -63,6 +64,11 @@ public class PlayerController : MonoBehaviour
         _trackSpline = trackSpline;
         // Update initial position.
         UpdateTrackPosition();
+    }
+
+    public void StartMoving()
+    {
+        canMove = true;
     }
 
     /// <summary>
@@ -105,7 +111,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (_trackSpline == null) return;
+        if (_trackSpline == null || !canMove) return;
 
         #region Handle Lane Switching Input
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
