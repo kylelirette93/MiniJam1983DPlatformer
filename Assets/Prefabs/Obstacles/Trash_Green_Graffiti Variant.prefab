@@ -17,6 +17,18 @@ PrefabInstance:
       value: Trash_Green_Graffiti Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5330640190047837498, guid: 0d4f9d97eca2e3d4bbe3374b255a7337, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5330640190047837498, guid: 0d4f9d97eca2e3d4bbe3374b255a7337, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5330640190047837498, guid: 0d4f9d97eca2e3d4bbe3374b255a7337, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5330640190047837498, guid: 0d4f9d97eca2e3d4bbe3374b255a7337, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
