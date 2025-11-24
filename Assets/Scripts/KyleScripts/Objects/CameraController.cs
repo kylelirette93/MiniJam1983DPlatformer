@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
 
     [Header("Camera Settings")]
     [SerializeField] Vector3 cameraOffset = new Vector3(0f, 5f, -10f);
+    float cameraZoomSpeed = 10f;
 
     private void Awake()
     {
@@ -35,7 +36,7 @@ public class CameraController : MonoBehaviour
             Vector3 desiredPosition = player.position + player.rotation * cameraOffset;
 
             // Smoothly interpolate to desired position.
-            transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * 5f);
+            transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * cameraZoomSpeed);
 
             // Look at the player with a slight upward offset.
             transform.LookAt(player.position + Vector3.up * 1.2f);
